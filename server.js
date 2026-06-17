@@ -22,7 +22,12 @@ app.post('/ask', async (req, res) => {
       })
     });
     const data = await response.json();
-    res.json({ reply: data.content[0].text });
+    console.log("Full API response:", JSON.stringify(data));
+    if (data.content && data.content[0]) {
+      res.json({ reply: data.content[0].text });
+    } else {
+      res.json({ reply: null, debug: data });
+    }
   } catch (err) {
     console.log("Error:", err.message);
     res.status(500).json({ error: err.message });
