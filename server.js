@@ -18,10 +18,13 @@ app.post('/ask', async (req, res) => {
       })
     });
     const data = await response.json();
-    res.json({ reply: data.content[0].text });
+    console.log("API response:", JSON.stringify(data));
+    const reply = data.content[0].text;
+    res.json({ reply: reply });
   } catch (err) {
+    console.log("Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(3000, () => console.log('Server running!'));
+app.listen(process.env.PORT || 3000, () => console.log('Server running!'));
